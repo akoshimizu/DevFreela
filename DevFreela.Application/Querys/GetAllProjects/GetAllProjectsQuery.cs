@@ -1,4 +1,5 @@
 ﻿using DevFreela.Application.Models;
+using DevFreela.Core.Entities;
 using MediatR;
 
 namespace DevFreela.Application.Querys.GetAllProjects
@@ -15,5 +16,8 @@ namespace DevFreela.Application.Querys.GetAllProjects
         public string search { get; set; }
         public int page { get; set; }
         public int size { get; set; }
+
+        public ProjectsGetAll ToEntity()
+            => new(search, page, size);
     }
 }

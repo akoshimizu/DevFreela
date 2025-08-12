@@ -1,21 +1,20 @@
 ﻿using DevFreela.Core.Entities;
-using DevFreela.Infrastructure.Persistence;
+using DevFreela.Core.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 namespace DevFreela.Application.Querys.GetAllSkills
 {
     public class GetAllSkillsHandler : IRequestHandler<GetAllSkillsQuery, List<Skill>>
     {
-        private readonly DevFreelaDbContext _context;
+        private readonly ISkillRepository _skillRepository;
 
-        public GetAllSkillsHandler(DevFreelaDbContext context)
+        public GetAllSkillsHandler(ISkillRepository skillRepository)
         {
-            _context = context;
+            _skillRepository = skillRepository;
         }
 
         public async Task<List<Skill>> Handle(GetAllSkillsQuery request, CancellationToken cancellationToken)
         {
-            var skills = await _context.Skills.ToListAsync();
+            var skills = await _skillRepository.GetAll();
             return skills;
         }
     }

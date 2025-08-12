@@ -1,8 +1,5 @@
 ﻿using DevFreela.Application.Commands.InsertSkill;
-using DevFreela.Application.Models;
 using DevFreela.Application.Querys.GetAllSkills;
-using DevFreela.Core.Entities;
-using DevFreela.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

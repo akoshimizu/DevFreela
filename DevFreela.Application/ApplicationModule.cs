@@ -1,14 +1,7 @@
 ﻿using DevFreela.Application.Commands.InsertProject;
 using DevFreela.Application.Models;
-using DevFreela.Application.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DevFreela.Application
 {
@@ -16,14 +9,7 @@ namespace DevFreela.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddServices();
             services.AddHandlers();
-            return services;
-        }
-
-        private static IServiceCollection AddServices(this IServiceCollection services)
-        {
-            services.AddScoped<IProjectService, ProjectService>();
             return services;
         }
 
