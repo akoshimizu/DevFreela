@@ -1,13 +1,17 @@
 ﻿using DevFreela.Application.Commands.InsertUser;
 using DevFreela.Application.Commands.InsertUserSkills;
+using DevFreela.Application.Commands.LoginUser;
+using DevFreela.Application.Models;
 using DevFreela.Application.Querys.GetUserById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.API.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,6 +22,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _mediator.Send(new GetUserByIdQuery(id));
@@ -26,6 +31,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post(InsertUserCommand command)
         {
             var result = await _mediator.Send(command);
@@ -47,6 +53,14 @@ namespace DevFreela.API.Controllers
             var description = $"File: {file.FileName}, Size: {file.Length}";
 
             return Ok(description);
+        }
+
+        [HttpPut("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

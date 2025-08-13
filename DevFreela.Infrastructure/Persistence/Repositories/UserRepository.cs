@@ -1,4 +1,5 @@
-﻿using DevFreela.Core.Entities;
+﻿using Azure.Core;
+using DevFreela.Core.Entities;
 using DevFreela.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,12 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
         {
             await _context.UserSkills.AddRangeAsync(userSkills);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<User> Login(string email, string pass)
+        {
+            var result = await _context.Users.SingleOrDefaultAsync(u => u.Email == email && u.Password == pass);
+            return result;
         }
 
     }

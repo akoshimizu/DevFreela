@@ -6,12 +6,14 @@ using DevFreela.Application.Commands.UpdateProject;
 using DevFreela.Application.Querys.GetAllProjects;
 using DevFreela.Application.Querys.GetProjectById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,6 +24,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "freelancer, client")]
         public async Task<IActionResult> Get(string search = "",  int page = 0, int size = 2)
         {
             //var result = _service.GetAll(search, page, size);
@@ -46,6 +49,7 @@ namespace DevFreela.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult>Post(InsertProjectCommand command)
         {
             //var result = _service.Insert(model);
